@@ -1,4 +1,5 @@
 //! Importar express
+const path = require('path')
 const express = require('express');
 const cors = require('cors')
 //! se importa el dotenv para poder usar las variables de entorno dentro del archivo o si no se puede usar process.env.PORT que es de donde se obtiene el puerto
@@ -23,11 +24,15 @@ app.use(express.static('public'))
 app.use(express.json())
 
 //! Crear rutas
-//Todo: rutas para auth
+
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/events', require('./routes/events'))
-//Todo: rutas para crud de eventos
 
+
+//! Manejar las demas rutas
+app.use('*', (req, res)=> {
+    res.sendFile( path.join( __dirname, 'public/index.html' ) )
+})
 
 
 
